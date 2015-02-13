@@ -71,7 +71,7 @@ num_of_options=1000;% the number of options per windspeed per coverage. standard
 
 if read_files=='y'; % from preamble. If the data hasn't been read in yet, read it in.
     disp('1)Reading in Data Files')
-    sun_obscured_options = csvread('Sun_Obscured_Options_Generic.csv'); %Read in the sun obscured options, an array full of clouded hours in minutes(:,60).
+    sun_obscured_options = csvread('supportingfiles/Sun_Obscured_Options_Generic.csv'); %Read in the sun obscured options, an array full of clouded hours in minutes(:,60).
     %files to be read in from the example site in Cambourne, UK. list is the list of variable names which have supporting files. it is important that \supportingfiles\ folder is in the working directory, else you will need to update the dlmread function.
     list={'wind_max','pressure_avg','cum_springhp_prob','cum_summerhp_prob','cum_autumnhp_prob','cum_winterhp_prob','cum_springlp_prob','cum_summerlp_prob','cum_autumnlp_prob','cum_winterlp_prob','springlpsys_mean','springlpsys_std','summerlpsys_mean','summerlpsys_std','autumnlpsys_mean','autumnlpsys_std','winterlpsys_mean','winterlpsys_std','springhpsys_mean','springhpsys_std','summerhpsys_mean','summerhpsys_std','autumnhpsys_mean','autumnhpsys_std','winterhpsys_mean','winterhpsys_std','cum_morningspring_prob','cum_morningsummer_prob','cum_morningautumn_prob','cum_morningwinter_prob','cum_wind_spring_prob','cum_wind_summer_prob','cum_wind_autumn_prob','cum_wind_winter_prob','cum_cloudheight_spring_prob','cum_cloudheight_summer_prob','cum_cloudheight_autumn_prob','cum_cloudheight_winter_prob','cum_PAAmarkov_prob','cum_PBAmarkov_prob'};
     disp('2)Loading Markov Chains')

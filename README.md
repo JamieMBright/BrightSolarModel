@@ -10,7 +10,8 @@ The model was produced in Matlab r2012a. It is provided for use in matlab. The m
 * data_preparation_generic.m --- script to convert raw badc data into the desired format of the script.
 * supportingfiles --- folder containing the transition probability matrices and other statistics derived from the raw data. 
 * sun_obscured_options_generic.csv --- csv containing 1000 examples of hour cloud cover for each wind speed.
-* cloud_sampling_technique.m --- long iterative process of producing clouded hour samples for each okta and windspeed.
+* cloud_sampling_technique.m --- long iterative process of producing clouded hour samples for each okta and windspeed. 
+
 -------------------------------------------
 
 

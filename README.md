@@ -6,10 +6,11 @@ The model can provide 1-minute resolution irradiance upon an arbitrary plane for
 The model was produced in Matlab r2012a. It is provided for use in matlab. The model is freely available for adoption, adaptation, and resubmission to this site. A citation to the paper must be made in all uses. 
 
 ------------------------------------------
-brightsolarmodel.m --- the model written in matlab
-data_preparation_generic.m --- script to convert raw badc data into the desired format of the script.
-supportingfiles --- folder containing the transition probability matrices and other statistics derived from the raw data. 
-sun_obscured_options_generic.csv --- csv containing 1000 examples of hour cloud cover for each wind speed.
+* brightsolarmodel.m --- the model written in matlab
+* data_preparation_generic.m --- script to convert raw badc data into the desired format of the script.
+* supportingfiles --- folder containing the transition probability matrices and other statistics derived from the raw data. 
+* sun_obscured_options_generic.csv --- csv containing 1000 examples of hour cloud cover for each wind speed.
+* cloud
 -------------------------------------------
 
 

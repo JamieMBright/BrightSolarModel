@@ -525,7 +525,7 @@ for hour=1:hours; %hour is the increasing value from 1 to hours(the preset lengt
     end
     
     % produce days for use in iradiance calculations
-    day_run=linspace(day_number+hour*(1/60),day_number+(hour+1)*(1/60),60);%produce minutely day fraction 1/(60*24). Same as the hour run above, except the day run
+    day_run=linspace(day_number+hour_number*(1/60),day_number+(hour_number+1)*(1/60),60);%produce minutely day fraction 1/(60*24). Same as the hour run above, except the day run
    day(hour*60-59:hour*60,1)=mod(hour'/24,days_in_year);
     
     %determine current season

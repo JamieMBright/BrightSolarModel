@@ -246,7 +246,7 @@ if error_flag==0
     for i=0:c_range-1
         string=['samples',num2str(i)];
         X=eval(string);
-        dlmwrite(['V2_clouds_vectors_sample',num2str(i),'__temporal_res_',num2str(temporal_res),'__spatial_res_',num2str(spatial_res),'__',num2str(num_of_samples),'_num_of_samples','__',num2str(max_num_of_clouds),'max_num_of_clouds'],X)
+        dlmwrite(['supportingfiles',filesep,'V2_clouds_vectors_sample',num2str(i),'__temporal_res_',num2str(temporal_res),'__spatial_res_',num2str(spatial_res),'__',num2str(num_of_samples),'_num_of_samples','__',num2str(max_num_of_clouds),'max_num_of_clouds'],X)
     end
 
 end

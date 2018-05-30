@@ -4,7 +4,7 @@ disp('Generating synthetic cloud cover');
 %% Set starting Markov transition matrices
     
 % select random start cloud_amount and wind speed
-previous_cloud_amount =ceil(rand*10)-cloud_amount_min+1;
+previous_cloud_amount =ceil(rand*cloud_amount_max)-cloud_amount_min+1;
 previous_wind_speed =ceil(rand*wind_speed_max)-wind_speed_min+1; 
 previous_cloud_height =ceil(rand*cloud_height_max)-cloud_height_min+1;  
 % start the pressure at the average pressure.
@@ -203,6 +203,7 @@ for h=1:length(time) %hour is the increasing value from 6 to hours(the preset le
     end
     
     %convert cloud_amount number into its proportionate sky coverage (out of 10) %WMO 2700 code for cloud cover provides conversions of cloud_amount in 8ths to 10ths.
+    % note that for indexing, 
     switch current_cloud_amount %using whatever the current hour's cloud_amount value is, convert it according to the WMO 2700 code suggestions
         case 1; coverage=1;                 cloud_amount_1min_sim(h*(t_res-1)+1:h*t_res)=1;                %1/10 or less but not zero
         case 2; coverage=2+floor(2*rand);   cloud_amount_1min_sim(h*(t_res-1)+1:h*t_res)=2;                %2/10 - 3/10
@@ -220,7 +221,7 @@ for h=1:length(time) %hour is the increasing value from 6 to hours(the preset le
     switch coverage
         case {1,2,3,4,5,6,7,8,9} %for coverage of 1-9.
             random=rand; % set a random value used in the below extraction from the options of sun obscured hours.
-            current_sun_obscurred=sun_obscured_options(((wind_speed_range*num_of_options*(coverage-1))+ceil(num_of_options*current_wind_speed-(random*num_of_options))),:); %note this is a complicated indexing that uses the coverage and the windspeed to randomly select 1 of the 1000 options for that particular C and u.
+            current_sun_obscurred=sun_obscured_options(((u_range*num_of_options*(coverage-1))+ceil(num_of_options*current_wind_speed-(random*num_of_options))),:); %note this is a complicated indexing that uses the coverage and the windspeed to randomly select 1 of the 1000 options for that particular C and u.
         case 10 %for fully overcast, the coverage for the hour is total, and so all 60 elements recieve a value of 1.
             current_sun_obscurred= 1; %sun_obscured is the primary array to come out of this long for loop.
     end

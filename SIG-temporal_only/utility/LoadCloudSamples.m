@@ -1,7 +1,6 @@
 
 
 %number of sample hours per wind speed per coverage  (Timings: 10^7,100=17s. 10^7,1000=32s. 2*10^7,100=31s. 2*10
-num_of_options=1000;
 % typically, it seems that there are at least 90% unique cloud samples
 % per bin across all speeds with 100 options. 
 
@@ -13,5 +12,5 @@ if exist('Sun_Obscured_Options_Generic.csv','file')
     
 else
     % if they dont exist, produce them
-    ProduceCloudSamples(t_res,num_of_options,wind_speed_range)    
+    ProduceCloudSamples(t_res,num_of_options,u_range)    
 end

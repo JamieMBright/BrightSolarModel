@@ -39,6 +39,9 @@
 InitialisePaths
 Preamble
 
+%% SIG specific settings
+SettingsForSIG
+
 %% USER DEFINED INPUTS TO THE SIG MODEL
 USER_DEFINED_VARIABLES
 SetTimeLogic % Time logic, User should not change this.

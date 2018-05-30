@@ -18,9 +18,9 @@ cloud_base_height = 1 + 10*round(50.*rand(length(time),1)); % load your cloud ba
 
 pressure = round(normrnd(1005,5,[length(time),1])); % load your 1h pressure data here
 
-cloud_amount = round(normrnd(4.5,2,[length(time),1])); % load your data here, e.g. csvread('oktadata.csv')
+cloud_amount = round(normrnd(4.5,2.5,[length(time),1])); % load your data here, e.g. csvread('oktadata.csv')
 cloud_amount(cloud_amount<0)= 0;
-cloud_amount(cloud_amount>8)= 8;
+cloud_amount(cloud_amount>9)= 9;
 
 wind_speed = round(gamrnd(2.7,2.144,[length(time),1]));  % load your wind_speed here. 
 

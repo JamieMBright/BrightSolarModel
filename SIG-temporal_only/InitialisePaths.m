@@ -3,4 +3,3 @@ home_dir=[pwd,'\'];
 addpath(home_dir);
 addpath([home_dir,'supportingfiles']);
 addpath([home_dir,'utility']);
-addpath([home_dir,'outputs'])

@@ -12,7 +12,7 @@ pressure=round(pressure./pressure_scale); % round too nearest 5.
 % and will not form a full range of Markov transition matrices.
 % Furthermore, 0 is an invalid motion as it will break the movement of the
 % clouds across the pv system.
-wind_limit=prctile(wind_speed,95);
+wind_limit=u_range;%prctile(wind_speed,95);
 wind_speed(wind_speed>wind_limit)=wind_limit;
 wind_speed(wind_speed==0)=1;
 

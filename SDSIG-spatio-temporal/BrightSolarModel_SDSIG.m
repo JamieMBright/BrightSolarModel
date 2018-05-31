@@ -88,8 +88,10 @@ SettingsForSDSIG
 
 %% USER DEFINED INPUTS TO THE SIG MODEL
 USER_DEFINED_VARIABLES
-SetTimeLogic % Time logic, User should not change this.
 LOAD_RAW_DATA_HERE
+
+%% set time logic
+SetTimeLogic 
 
 %% Safety checks of user deefined input
 UserDefinedVariablesSafetyCheck

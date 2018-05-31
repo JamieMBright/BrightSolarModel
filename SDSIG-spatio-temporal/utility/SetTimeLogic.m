@@ -19,3 +19,14 @@ seasons(months==3 | months==4 | months==5)=1;
 seasons(months==6 | months==7 | months==8)=2;
 seasons(months==9 | months==10 | months==11)=3;
 seasons(months==12 | months==1 | months==2)=4;
+
+
+%% time for each variable
+time_cloud_base_height_dv = datevec(time_cloud_base_height);
+time_cloud_base_height_months = time_cloud_base_height_dv(:,2);
+time_pressure_dv = datevec(time_pressure);
+time_pressure_months = time_pressure_dv(:,2);
+time_cloud_amount_dv = datevec(time_cloud_amount);
+time_cloud_amount_months = time_cloud_amount_dv(:,2);
+time_wind_speed_dv= datevec(time_wind_speed);
+time_wind_speed_months = time_wind_speed_dv(:,2);

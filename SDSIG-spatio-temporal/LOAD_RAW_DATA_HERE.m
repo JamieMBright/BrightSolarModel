@@ -27,6 +27,7 @@ time_wind_speed= datenum('20000101','yyyymmdd'):1/24:datenum('20000101','yyyymmd
 wind_speed = round(gamrnd(2.7,2.144,[length(time_wind_speed),1]));  % load your wind_speed here. 
 
 
+% this is just a test string
 
 
 

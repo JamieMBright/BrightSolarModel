@@ -34,3 +34,6 @@ if ~isnumeric(wind_speed)
     error('wind_speed must be numerical input')
 end
 
+if time_cloud_amount ~= time_pressure
+    error('the pressure and cloud amount must align')
+end

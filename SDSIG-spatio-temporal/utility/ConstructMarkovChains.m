@@ -27,17 +27,17 @@ cloud_height_autumn=zeros(cloud_height_range);
 cloud_height_winter=zeros(cloud_height_range);
 
 %% Define the seasons.
-months_for_markov=months;
+months_for_cloud_amount_markov=time_cloud_amount_months;
 %   Seasons are defined simplistically as
 %   Spring=Mar to May. Summer=Jun to Aug.
 %   Autumn=Sept to Nov. Winter=Dec to Feb
 % whilst spring summer autumn and winter are northern hemisphere timings,
 % and not all areasa have 4 seasons, the arbitrary separation of the year
 % into 4 quarters will still produce meaningful differences
-seasons_for_markov(months_for_markov==3 | months_for_markov==4 | months_for_markov==5)=1;
-seasons_for_markov(months_for_markov==6 | months_for_markov==7 | months_for_markov==8)=2;
-seasons_for_markov(months_for_markov==9 | months_for_markov==10 | months_for_markov==11)=3;
-seasons_for_markov(months_for_markov==12 | months_for_markov==1 | months_for_markov==2)=4;
+seasons_for_markov(months_for_cloud_amount_markov==3 | months_for_cloud_amount_markov==4 | months_for_cloud_amount_markov==5)=1;
+seasons_for_markov(months_for_cloud_amount_markov==6 | months_for_cloud_amount_markov==7 | months_for_cloud_amount_markov==8)=2;
+seasons_for_markov(months_for_cloud_amount_markov==9 | months_for_cloud_amount_markov==10 | months_for_cloud_amount_markov==11)=3;
+seasons_for_markov(months_for_cloud_amount_markov==12 | months_for_cloud_amount_markov==1 | months_for_cloud_amount_markov==2)=4;
 
 %% Markov case
 %Assign a case number in order to populate the correct Markov Table. these cases will be used as a reference.

@@ -31,10 +31,3 @@ cloud_amount = round(9*rand([length(time_cloud_amount),1])); % load your data he
 % wind_speed is the hourly wind_speed measured at 10m (standard) in m/s.
 time_wind_speed= datenum('20000101','yyyymmdd'):1/24:datenum('20000101','yyyymmdd')+365*8; % 8 year time series
 wind_speed = round(gamrnd(2.7,2.144,[length(time_wind_speed),1]));  % load your wind_speed here. 
-
-
-% this is just a test string
-
-
-
-

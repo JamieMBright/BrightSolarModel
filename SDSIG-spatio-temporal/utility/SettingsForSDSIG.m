@@ -15,8 +15,6 @@
 c_range = 11; 
 %(horizontal angles for centre of doain in degs.
 panel_pitch_hrz=0; panel_azimuth_hrz=0; 
-% the corresponding y domain size, completing the spatial domain square.
-domain_y_max=spatial_res; 
 % the temporal resolution in seconds. Note this is only guaranteed for 60
 % seconds. Changes in this variable are currently unsupported and may cause
 % errors.
@@ -41,8 +39,11 @@ num_of_samples=100;
 % columns wide. The num_of_samples is how many different cloud fields are
 % to be produced PER wind speed value PER cloud coverage range (c_range).
 
-% 3) the size of the spatial domain
+% 3) the size of the spatial domain and corresponding y domain.
 spatial_res=1500;
+domain_y_max=spatial_res; 
+% NOTE domain_y_max should NOT be changed, currently assumed that the
+% domain is a square and changes in this are unsupported.
 % the spatial resolution refers to the length of one side of the square
 % that all the houses exist in. For example, a spatial_res=1500 defines a
 % spatial domain of 1500m-by-1500m. The spatial domain is always square as

@@ -20,14 +20,6 @@ coeff.shape2 =  dataArray{1,7};
 %select range to draw distributions from. if started at 0, Nan would be given and would disrupt future script. 2 is a contingency and highly rare except at low zeniths.
 distribution_range=0.01:0.01:2; 
 
-% L=3600; % a constant in determining the resolution of which the spline'd line will be applied
-% kc_residual=0; %the start residual value for the clear sky, it is used in first loop.
-% xx=1:1:temporal_res*hours; % length of simulation in minutes, used in spline function
-% Y=0.5; % pre allocation is too variable, so is redefined each iteration. Inefficient but practical.
-% x=0.5; % pre allocation is too variable, so is redefined each iteration. Inefficient but practical.
-% okta_hourly(okta_hourly==10)=0; %return all okta 0 moments to be represented by 0, not 10.
-
-
 %% Cloud motion and clear-sky time series production
 disp('Moving cloud fields across spatial domain. This may take some time')
 disp(' Process: ')
@@ -241,8 +233,8 @@ for Hour =1:length(time) %loop every hour in the simulation
     
    %% write separation house_kcvalues and house_coverages
    for house=1:number_of_houses
-            dlmwrite(['supportingfiles',filesep,'temporary_files',filesep,num2str(house),'_separation.mat'],separation(house,:),'-append');
-            dlmwrite(['supportingfiles',filesep,'temporary_files',filesep,'_house_kcvalues.mat'],house_kcvalues(house,:),'-append');
-            dlmwrite(['supportingfiles',filesep,'temporary_files',filesep,'_house_coverages.mat'],house_coverages(house,:),'-append');
+            dlmwrite(['supportingfiles',filesep,'temporary_files',filesep,'separation_',num2str(house),'.txt'],separation(house,:),'-append');
+            dlmwrite(['supportingfiles',filesep,'temporary_files',filesep,'house_kcvalues_',num2str(house),'.txt'],house_kcvalues(house,:),'-append');
+            dlmwrite(['supportingfiles',filesep,'temporary_files',filesep,'house_coverages_',num2str(house),'.txt'],house_coverages(house,:),'-append');
    end
 end

@@ -72,6 +72,7 @@ height_above_sea_level_central = user_data{1,5};
 % define the different properties within the simulation
 %  NOTE that this is an arbitrary example to set random properties of X,Y,h,azi and tilt.
 house_info = csvread('house_info.csv',1,0);
+number_of_houses = size(house_info,1);
 
 %% Load in the raw variables data here.
 % The data is required in a strict 1-hour time series format. Each variable

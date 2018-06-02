@@ -79,23 +79,22 @@
 % | Date completed: 30/01/2015                                          |
 % | Code base updated on: 30/05/2018                                    |
 % +---------------------------------------------------------------------+
+
 %% Preamble
+addpath('utility\')
 InitialisePaths
-Preamble
 
 %% SDSIG 
 SettingsForSDSIG
 
-%% USER DEFINED INPUTS TO THE SIG MODEL
-USER_DEFINED_VARIABLES
-LOAD_RAW_DATA_HERE
+%% Load user data
+LoadUserData
 
 %% set time logic
 SetTimeLogic 
 
 %% Safety checks of user deefined input
 UserDefinedVariablesSafetyCheck
-InputDataSafteyCheck
 
 %% Raw data conversions and statistics derivation
 RawDataConversionsAndStatistics
@@ -109,14 +108,11 @@ LoadCloudSamples
 %% Produce cloud cover for the specified duration
 DeriveStochasticWeather
 
-%% Derive cloud cover within the spatial domain
-DeriveCloudCoverAtEachHouse
-
-%% Solar geometry and clear-sky irradiance
+%% Solar geometry and clear-sky irradiance at centre of spatial domain
 CalculateSolarGeometryAndClearSkyIrradiance
 
-%% Derive the clear-sky indices
-ClearSkyIndices_SDSIG
+%% Derive cloud cover within the spatial domain
+CloudMotionAndClearSkyIndices
 
 %% Apply the clear-sky indices to the global horizontal irradiance and tilt it for each house
 CalculateTiltedIrradianceAtEachHouse
@@ -126,5 +122,3 @@ Postamble
 
 %% Plots and figures
 PlotsAndFigures
-
-% THE OUTPUT VARIABLE OF INTEREST IS CALLED "house_panel_irradiance"

@@ -4,7 +4,7 @@
 % Created by : Jamie Brght
 % Created : 27th February 2015 
 %
-% [x2 y2] = matrot(theta,x1,y1,m,n)
+% [x2 y2] = MatricesRotation(theta,x1,y1,m,n)
 % Where:
 % theta    is the angle (degs) to rotate coordinates by
 % x1       is the list of x coordinates (n index)
@@ -15,7 +15,7 @@
 % y2       is the rotated m-index of the corresponding y1 input
 
 %% The function
-function [x2 y2] = matrot(theta,x1,y1,mat_size)
+function [x2 y2] = MatricesRotation(theta,x1,y1,mat_size)
 %convert theta for clockwise rotation, clockwise seems more natural
 theta = -theta;
 
@@ -61,7 +61,7 @@ end
 % % 
 % % theta=360*rand; %select an angle of rotation
 % % 
-% % [x2 y2]=matrot(theta,x1,y1,mat_size); %use the matrot function to get rotated x y values
+% % [x2 y2]=MatricesRotation(theta,x1,y1,mat_size); %use the MatricesRotation function to get rotated x y values
 % % 
 % % 
 % % X1=zeros(mat_size,mat_size); %make the matrix for initial xy values

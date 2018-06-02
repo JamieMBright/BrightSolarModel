@@ -77,8 +77,10 @@ coverage_sim=zeros(size(time)).*NaN;
 cloud_field_sample_sim=zeros(size(time)).*NaN;
 cloud_dir_sim=zeros(size(time)).*NaN;
 sun_obscurred_sim=zeros(size(time)).*NaN;
-coverage_1min_sim=zeros(size(time_1min_resolution)).*NaN;
 
+coverage_1min_sim=zeros(size(time_1min_resolution)).*NaN;
+wind_speed_1min_sim=zeros(size(time_1min_resolution)).*NaN;
+cloud_amount_1min_sim=zeros(size(time_1min_resolution)).*NaN;
 
 % Produce the cloud cover over entire length of simulation as well as time requirements for irradiance calculations
 % this loop goes through every hour of the desired simulation time and creates 1-minute resolution cloud cover.
@@ -234,6 +236,7 @@ for h=1:length(time) %hour is the increasing value from 6 to hours(the preset le
     coverage_1min_sim((h-1)*t_res+1:h*t_res) = coverage;
     cloud_dir_sim(h)=current_cloud_dir;
     cloud_field_sample_sim(h)=ceil((num_of_samples-1)*rand)+1;
-    
+    wind_speed_1min_sim((h-1)*t_res+1:h*t_res) = current_wind_speed+wind_speed_min-1;
+    cloud_amount_1min_sim((h-1)*t_res+1:h*t_res) =current_cloud_amount+cloud_amount_min-1;
  end
  

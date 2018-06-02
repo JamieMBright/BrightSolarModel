@@ -10,7 +10,7 @@ house_coverages=zeros(number_of_houses,length(time_1min_resolution)); %different
 % preliminarily rotate houses to start from 0 degre cloud direction
 Xs = house_info(:,1);
 Ys = house_info(:,2);
-[Xs,Ys]=matrot(90,Xs,Ys,spatial_res); %as the tiles will approach from the right, and 0deg is a northerly cloud direction, rotate the XY 90, so that north now points to the direction of the approaching cloud tile. This essentially "zeros" the cloud angle.
+[Xs,Ys]=MatricesRotation(90,Xs,Ys,spatial_res); %as the tiles will approach from the right, and 0deg is a northerly cloud direction, rotate the XY 90, so that north now points to the direction of the approaching cloud tile. This essentially "zeros" the cloud angle.
 
 cloudmovement=0;
 for min =1:size(house_coverages,2)
@@ -100,7 +100,7 @@ for min =1:size(house_coverages,2)
     
     
     for house=1:number_of_houses
-        [XY_rotated(:,1),XY_rotated(:,2)]=matrot(dir_ref,round(Ys),round(Xs),spatial_res); %a list of the XY coordiantes rotated around the centrepoint by the cloud direction.
+        [XY_rotated(:,1),XY_rotated(:,2)]=MatricesRotation(dir_ref,round(Ys),round(Xs),spatial_res); %a list of the XY coordiantes rotated around the centrepoint by the cloud direction.
         dxd=spatial_res-XY_rotated(house,1); %distance: house to domain edge
         a=((u_ref*3600)/temporal_res)*cloudmovement; %distance of endge of domain to edge of cloud environment
         dxe=dxd-a; %distance of house to edge of cloud environment

@@ -126,10 +126,10 @@ for Hour =1:length(time) %loop every hour in the simulation
 %% Now perform the same for the future hour.
     if Hour<(length(time)-1) %so long as it is not the end of the simulation...
         
-        u_ref=wind_speed_sim(Hour+1); %cloudspeed
-        c_ref=coverage_sim(Hour+1); %coverage
-        n_ref=cloud_field_sample_sim(Hour+1); %random variate for the hour
-        dir_ref=cloud_dir_sim(Hour+1); %cloud direction
+        u_ref_next=wind_speed_sim(Hour+1); %cloudspeed
+        c_ref_next=coverage_sim(Hour+1); %coverage
+        n_ref_next=cloud_field_sample_sim(Hour+1); %random variate for the hour
+        dir_ref_next=cloud_dir_sim(Hour+1); %cloud direction
         
         switch c_ref_next
             case 0

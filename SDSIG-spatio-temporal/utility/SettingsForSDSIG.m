@@ -51,7 +51,6 @@ spatial_res=1500;
 % discussed next.
 
 % 4) the maximum number of clouds within a cloud field
-max_num_of_clouds=500; 
 % Each cloud sample may contain up to 'max_num_of_clouds' clouds within a
 % cloud field sample. Note that this is a limiting factor, to produce a
 % cloud field at high wind speed in a large spatial domain requires many
@@ -68,9 +67,12 @@ max_num_of_clouds=500;
 % fields have been successfully produced, a figure is produced displaying
 % the number of clouds required for each coverage and wind speed, so this
 % can be tuned later.
+% max_num_of_clouds = 500;
 % It could also be possible to dynamically set this. Perhaps:
-%
-% max_num_of_clouds = 500 * spatial_res^2/1500^2 * u_range/25;
+max_num_of_clouds = round(500 * spatial_res^2/1500^2 * u_range/25);
+if max_num_of_clouds < 50
+    max_num_of_clouds = 50;
+end
 
 %% Implications of changing the supported settings.
 % Changes in the above variables have considerable computer memory

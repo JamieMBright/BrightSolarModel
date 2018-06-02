@@ -81,7 +81,6 @@
 % +---------------------------------------------------------------------+
 %% Preamble
 InitialisePaths
-Preamble
 
 %% SDSIG 
 SettingsForSDSIG

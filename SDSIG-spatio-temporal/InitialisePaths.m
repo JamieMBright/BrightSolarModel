@@ -3,3 +3,13 @@ home_dir=[pwd,'\'];
 addpath(home_dir);
 addpath([home_dir,'supportingfiles']);
 addpath([home_dir,'utility']);
+
+%% preamble
+
+disp('-------------------------------------------');
+disp('            Starting simulation');
+disp('-------------------------------------------');
+tic %set a timer
+echo off
+
+

@@ -79,22 +79,26 @@
 % | Date completed: 30/01/2015                                          |
 % | Code base updated on: 30/05/2018                                    |
 % +---------------------------------------------------------------------+
+
+house_panel_irradiance = SDSIG();
+
+function hpa = SDSIG()
+
 %% Preamble
+addpath('utility\')
 InitialisePaths
 
 %% SDSIG 
 SettingsForSDSIG
 
-%% USER DEFINED INPUTS TO THE SIG MODEL
-USER_DEFINED_VARIABLES
-LOAD_RAW_DATA_HERE
+%% Load user data
+LoadUserData
 
 %% set time logic
 SetTimeLogic 
 
 %% Safety checks of user deefined input
 UserDefinedVariablesSafetyCheck
-InputDataSafteyCheck
 
 %% Raw data conversions and statistics derivation
 RawDataConversionsAndStatistics
@@ -126,4 +130,5 @@ Postamble
 %% Plots and figures
 PlotsAndFigures
 
-% THE OUTPUT VARIABLE OF INTEREST IS CALLED "house_panel_irradiance"
+hpa = house_panel_irradiance;
+end

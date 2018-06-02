@@ -14,7 +14,6 @@ xtickslabels={'0','4','8','12','16','20','24'}; %set the xaxis labels for subplo
 xxticks=[0,4,8,12,16,20,24]; %set the x tick labels for sub plot 2 and 3
 yyticks=[0,3,6,9]; %set the y tick locations for subplot 1
 okta_for_plot_1hr = cloud_amount_sim;
-okta_for_plot_1hr(okta_for_plot_1hr==10)=0;%alter back an okta of 10 to 0. 10 was used in simulation for indexing
 
 figure(1); %begin figure 1
 subplot(3,1,1) %create the first of 3 subplots. subplot(rows,cols,ref)

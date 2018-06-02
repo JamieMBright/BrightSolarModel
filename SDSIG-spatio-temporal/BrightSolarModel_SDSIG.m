@@ -80,10 +80,6 @@
 % | Code base updated on: 30/05/2018                                    |
 % +---------------------------------------------------------------------+
 
-house_panel_irradiance = SDSIG();
-
-function hpa = SDSIG()
-
 %% Preamble
 addpath('utility\')
 InitialisePaths
@@ -126,6 +122,3 @@ Postamble
 
 %% Plots and figures
 PlotsAndFigures
-
-hpa = house_panel_irradiance;
-end

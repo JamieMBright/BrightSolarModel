@@ -1,4 +1,4 @@
-X,Y,h,azi,tilt
+Cartesian X within spatial domain (m),Cartesian Y within spatial domain (m),elevation above sea level (m),"Panel azimuth angle -west and +east, south (deg)",Panel tilt from horizontal up=0 to vertical=90 to horizontal down=180 (deg)
 1223.08553,1359.687906,-7.460263674,8.621733204,0
 949.5388693,147.3106075,-4.430035623,3.426244665,20
 1437.260253,1448.332803,-6.847738366,30.34923466,25

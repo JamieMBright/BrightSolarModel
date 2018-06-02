@@ -1,0 +1,2 @@
+start_day (ddmmyyyy),	end_day (ddmmyyyy),		latitude_central (deg +90N:-90S),	longitude_central (degs -180W:0 London: 180E),	mean height above sea level (m)
+01012017, 				01012018, 				50.2178, 							-5.32656, 										87

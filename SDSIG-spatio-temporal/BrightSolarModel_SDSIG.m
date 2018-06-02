@@ -112,14 +112,11 @@ LoadCloudSamples
 %% Produce cloud cover for the specified duration
 DeriveStochasticWeather
 
-%% Derive cloud cover within the spatial domain
-DeriveCloudCoverAtEachHouse
-
-%% Solar geometry and clear-sky irradiance
+%% Solar geometry and clear-sky irradiance at centre of spatial domain
 CalculateSolarGeometryAndClearSkyIrradiance
 
-%% Derive the clear-sky indices
-ClearSkyIndices_SDSIG
+%% Derive cloud cover within the spatial domain
+CloudMotionAndClearSkyIndices
 
 %% Apply the clear-sky indices to the global horizontal irradiance and tilt it for each house
 CalculateTiltedIrradianceAtEachHouse

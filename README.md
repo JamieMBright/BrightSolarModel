@@ -1,10 +1,15 @@
 # Welcome to The Bright Solar Resource Model
-Here you can download the Bright Solar Resource Model. You are invited to adopt, adapt and resubmit changes and alterations to this Github Repository. Please feel free to use this work as a 1-minute resolution irradiance input into your work, just ensure you cite the work appropriately (see Authors and Contributors).
+Here you can download the Bright Solar Resource Model. 
+You are invited to adopt and adapt this work. Make a branch and work away.
+Please feel free to use this work to generate spatio-temporal, 1-minute resolution irradiance time-series as inputs into your work, just ensure you cite the work appropriately (see Requested Citation section).
 
 ## The Download
-The download comes with the Matlab .m script, and with a supporting files folder. You will need access to Matlab, this version was written using Matlab r2012a.
+The download contains the two version of the Bright Solar Resource Model.
+- The Solar Irradiance Generator (SIG). This is a temporal only methodology that only produces irradiance for a single site. The methodology of the SIG was published in Bright et al. (2015, Solar Energy, ).
+- The Spatially Decorrelating Solar Irradiance Generator (SDSIG). This is the first synthetic spatio-temporal irradiance generator in the world. It was published in Bright et al. (2017, Solar Energy, ) but also featured in some conference papers (detailed below). All the papers are freely available through my Research Gate profile.
 
-Due to data protection terms and conditions, I am unable to provide the user with the raw input data for the model. Instead, the statistics drawn from this data are provided for the location of Cambourne, Cornwall, UK. Should you have access to the British Atmospheric Data Centre MIDAS data sets, you can use the data preparation script provided to get the data into the appropriate format. Note that adjustments will be required within the model script, this is detailed as comments within. The model will run without it, however the weather inputs will be for Cambourne, however the Earth-sun geometry calculations will provide the clear-sky irradiance for the input longitude and latitude. 
+Due to data protection terms and conditions, I am unable to provide the user with the raw input data for the model. For the SIG, I have provided the statistics drawn from the raw data and are provided for the location of Cambourne, Cornwall, UK. It is recommended that you use the SDSIG, even if you only want a single time series. This is because there are improvements to the clear-sky index methodology. 
+ Note that adjustments will be required within the model script, this is detailed as comments within. The model will run without it, however the weather inputs will be for Cambourne, however the Earth-sun geometry calculations will provide the clear-sky irradiance for the input longitude and latitude. 
 
 ## A Little About the Model
 This model synthetically produces a 1-minute resolution irradiance profile for a desired input location. The model takes mean hourly weather observation data and uses them to produce transition probability matrices. From here, weather variables are stochastically determined for each hour, before applying techniques to convert the weather variables into 1-minute resolution cloud cover. Depending on the weather conditions, atmospheric losses are applied to the calculated global clear-sky irradiance to give the global incident irradiance upon an arbitrary plane. 
@@ -26,6 +31,8 @@ This work was financially supported by the Engineering and Physical Sciences Res
 All uses of this work must cite the paper published in the Journal of Solar Energy http://www.sciencedirect.com/science/article/pii/S0038092X15001024.
 
 Bright, J.M.; Smith, C.J.; Taylor, P.G. & Crook, R. 2015. Stochastic Generation of Synthetic Minutely Irradiance Time Series Derived from Mean Hourly Weather Observation Data. The Journal of Solar Energy. Volume:115. Pages 229-242. DOI:doi:10.1016/j.solener.2015.02.032
+
+## Requested Citation
 
 
 ## Support or Contact

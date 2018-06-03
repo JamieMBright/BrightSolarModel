@@ -20,6 +20,14 @@ coeff.shape2 =  dataArray{1,7};
 %select range to draw distributions from. if started at 0, Nan would be given and would disrupt future script. 2 is a contingency and highly rare except at low zeniths.
 distribution_range=0.01:0.01:2; 
 
+%% Set initial house orientations.
+% because the cloud motion simulates the clouds coming in from the "right"
+% or from a larger x to lower x, the houses are rotated to assign the right
+% side of the plot to be North == 0deg. Houses are therefore rotated 90
+% degrees to begin
+[house_xs, house_ys] = MatricesRotation(90, house_info(:,1), house_info(:,2), spatial_res);
+
+
 %% Cloud motion and clear-sky time series production
 disp('Moving cloud fields across spatial domain. This may take some time')
 disp(' Process: ')
@@ -46,6 +54,9 @@ for Hour =1:length(time) %loop every hour in the simulation
     if Hour>1 % For all hours after the very first in the simulation..
         %the current cloud field is set the previous hour's future cloud field, and so only need to load new xyr2
         xyr=xyr2; 
+        dir_ref = dir_ref_next;
+        u_ref = u_ref_next;
+       
     else %for the first hour, create the cloud field.
         %extract the weather data to select appropriate cloud field.
         u_ref=wind_speed_sim(Hour); %cloudspeed
@@ -205,11 +216,11 @@ for Hour =1:length(time) %loop every hour in the simulation
         
         for house=1:number_of_houses %take each house at a time
             %orientate by the cloud direction
-            [XY_rotated(:,1),XY_rotated(:,2)]=MatricesRotation(dir_ref,round(house_info(:,2)),round(house_info(:,1)),spatial_res); 
-            dxd=spatial_res-XY_rotated(house,1); %distance: house x location to far edge of domain edge
+            [house_x_rotated,house_y_rotated]=MatricesRotation(dir_ref,house_xs(house),house_ys(house),spatial_res); 
+            dxd=spatial_res-house_x_rotated; %distance: house x location to far edge of domain edge
             dX=cloudmovement*(3600/temporal_res)*u_ref_next; %Distance: house domain and cloud domain overlap
             dxeC2=dxd-dX+u_ref*3600; %distance: house to far edge of cloud field
-            separation(house,cloudmovement)=XY_rotated(house,1);
+            separation(house,cloudmovement)=house_x_rotated;
             
             % attach together the cloud fields
             r_C1=[r1;r2]; %combine the radii from both cloud fields
@@ -220,7 +231,7 @@ for Hour =1:length(time) %loop every hour in the simulation
             clouds=length(r_C1(r_C1>0)); %determine the number of clouds within the cloud domain
             if clouds>0 %so long as clouds are present...
                 dx=dxd+x_C1-dX; % distance along x axis from house to cloud centre
-                dy=XY_rotated(house,2)-y_C1; %distance in y direction of house to cloud
+                dy=house_y_rotated-y_C1; %distance in y direction of house to cloud
                 d=sqrt(dx.^2+dy.^2); %direct line from house to cloud
                 house_coverages(house,cloudmovement)=sum(d<r_C1(r_C1>0)); %record how many clouds are covering the house
                 kcs1=kc_C1(d<r_C1); %extract appropriate kc values that cover the house

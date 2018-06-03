@@ -11,7 +11,7 @@ delete(['outputs',filesep,'*']);
 
 % reporting
 disp('Applying cloud edge enhancements and long term clear and overcast statistics to clear-sky index')
-disp('Calculating the tilte irradiance...')
+disp('Calculating the tilted irradiance...')
 
 % check available memory
 [userview,systemview] = memory;
@@ -42,6 +42,9 @@ end
 not_obscured_min(zenith_angle>90)=0; %take account of night
 
 for house=1:number_of_houses % loop through each houses
+    
+    disp(['              ...for house: ',num2str(house)]) %indicate to the user the progress
+    
     %% load up each house's data
     house_kcvalues_temp=dlmread(['supportingfiles',filesep,'temporary_files',filesep,'house_kcvalues_',num2str(house),'.txt'])';
     house_coverages_temp=dlmread(['supportingfiles',filesep,'temporary_files',filesep,'house_coverages_',num2str(house),'.txt'])';
@@ -102,12 +105,12 @@ for house=1:number_of_houses % loop through each houses
                 Ok8_kcvalues(ii)=sum(genGammaCDF<rand)./100; %assign kc to each interval
             end
             xx=els(1):els(end);
-            house_kcvalues(els(1)+ceil(mean(separation(iii,els(1):els(end)))):els(end)+ceil(mean(separation(iii,els(1):els(end)))))=interp1(els,Ok8_kcvalues,xx,'pchip');%piecewise cubic hermit interpolation technique between the kc values.
+            this_house_separation = ceil(mean(separation(els(1):els(end))));
+            house_kcvalues(els(1)+this_house_separation:els(end)+this_house_separation) =interp1(els,Ok8_kcvalues,xx,'pchip');%piecewise cubic hermit interpolation technique between the kc values.
         end
         Ok8_duration=1; %reset the duration and loop again.
     end
     
-    disp(['              ...for house: ',num2str(house)]) %indicate to the user the progress
     panel_tilt=house_info(house,5) ; %extract the individual location geography and geometry
     panel_orientation=house_info(house,4);
     panel_hasl=house_info(house,3);
@@ -230,6 +233,3 @@ if write_mode == false
     csvwrite(['outputs',filesep,'Gt_all_houses',num2str(house),'.csv'],house_panel_irradiance) % Gt
     csvwrite(['outputs',filesep,'kc_all_houses',num2str(house),'.csv'],kc_minutely_all) % kc
 end
-
-% clear the temporary files
-delete(['supportingfiles',filesep,'temporary_files',filesep,'*']);

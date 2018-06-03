@@ -2,7 +2,7 @@ disp('Producing plots and figures')
 
 %% FIGURE 1
 %example plot 1 showing the irradiance.
-r=0.9*rand; %random variable
+r=0.6*rand; %random variable
 rday=round(r*num_of_days); %select a random day from those simulated
 dayofyear=rday-floor(rday/365)*365; % determine what day of the year this is (instead of day 730, this would be 365)
 xstart=rday*24*60; %determine the start minute
@@ -47,7 +47,7 @@ handle=title('c)'); %give it a label
 set(handle,'Position',[120 v(4)*1.05 0]); %set axis location so that the title c) is in appropriate place
 
 %% FIGURE 2
-r=0.9*rand; %random variable
+r=0.6*rand; %random variable
 rday=round(r*num_of_days); %select a random day from those simulated
 dayofyear=rday-floor(rday/365)*365; % determine what day of the year this is (instead of day 730, this would be 365)
 xstart=rday*24*60; %determine the start minute

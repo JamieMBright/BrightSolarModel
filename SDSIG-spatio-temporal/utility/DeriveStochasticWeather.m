@@ -178,7 +178,12 @@ for h=1:length(time) %hour is the increasing value from 6 to hours(the preset le
     current_cloud_height=1+sum(cloud_height_transition_matrix(previous_cloud_height,:)<rand); % use appropriate markov chain to select start cloud height
     current_pressure=1+nansum(pressure_markov_transition_matrix(previous_pressure,:)<rand);
     
-    current_cloud_dir=normrnd(previous_cloud_dir,0.1); %needs update, just random.
+    %%%%%% CLOUD DIRECTION
+    current_cloud_dir=normrnd(previous_cloud_dir,10); %needs update, just random.
+    % modulo division by 360 so that cloud directions <0 or >360 are
+    % normalised
+    current_cloud_dir = mod(current_cloud_dir,360);
+    
     
     % Transform the ground wind speed to the speed at the cloud height (met office):
     %u_ref=u10(log(zref/zoref))/(log(z10/zoref)) for <1km height. A distribution is used for above this. THIS is a significant limitation

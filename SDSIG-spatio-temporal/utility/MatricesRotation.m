@@ -34,7 +34,7 @@ dy2=dx1.*sin(degtorad(theta)) + dy1.*cos(degtorad(theta));
 x2=dx2+C;
 y2=dy2+C;
 
-% %recalculated the original xy values, roudn them so that indexing is
+% %recalculated the original xy values, round them so that indexing is
 % %logical
 % x2=round(dx2+C); 
 % y2=round(dy2+C);

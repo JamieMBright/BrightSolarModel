@@ -47,7 +47,7 @@ The SDSIG has manu more publications where the developments are listed:
 *	Bright, Jamie M., Taylor, Peter G. and Crook R. 2015. Methodology to Stochastically Generate Spatially Relevant 1-Minute Resolution Irradiance Time Series from Mean Hourly Weather Data. 5th Solar Integration workshop 2015, 19th-20th October 2015, Brussels, Belgium.
 
 Alongside all these papers, I also request that you reference this GitHub repository so that future users may find it:
-Bright, Jamie M. 2018. GitHub Repository - The Bright Solar Model. https://github.com/JamieMBright/BrightSolarModel
+Bright, Jamie M. 2018. GitHub: The Bright Solar Model. https://jamiembright.github.io/BrightSolarModel/
 
 ## Support and Contact
 For scientific queries, your first point of call should be to the open access papers. All of them are open access through Elsevier; they are also freely available through my ResearchGate contributions: https://www.researchgate.net/profile/Jamie_Bright2. Within those papers you will find explanation of the mathematical procedures and the justification behind any assumptions. 

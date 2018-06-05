@@ -4,7 +4,7 @@
 % All of this section is from Blanco-Muriel et al., 2001
 % Solar Energy, 70(5), pp. 431-441.
 disp('Calculating solar geoemetry using Blanco-Muriel (2001)')
-julian_day = juliandate(time_1min_datevecs);
+julian_day = juliandate(datetime(time_1min_datevecs));
 n = julian_day - 2451545;
 Omega = 2.1429 - 0.0010394594 .* n;
 L = 4.8950630 + 0.017202791698 .* n; % mean longitude_central

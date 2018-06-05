@@ -4,9 +4,9 @@ disp('Generating stochastic weather conditions');
 %% Set starting Markov transition matrices
     
 % select random start cloud_amount and wind speed
-previous_cloud_amount =ceil(rand*9)-cloud_amount_min+1;
-previous_wind_speed =ceil(rand*wind_speed_max)-wind_speed_min+1; 
-previous_cloud_height =ceil(rand*cloud_height_max)-cloud_height_min+1;  
+previous_cloud_amount =mode(cloud_amount)-cloud_amount_min+1;
+previous_wind_speed =mode(wind_speed)-wind_speed_min+1; 
+previous_cloud_height =mode(cloud_base_height)-cloud_height_min+1;  
 % start the pressure at the average pressure.
 pressure_start=round(pressure_avg)-pressure_min+1; 
 

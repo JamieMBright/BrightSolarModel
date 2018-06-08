@@ -102,7 +102,8 @@ if min(report)<250
 end
 
 %% make a markov chain for the morning (between 1-6am)
-hours_for_markov=days;
+time_datevec_cloud_amount = datevec(time_cloud_amount);
+hours_for_markov=round(time_datevec_cloud_amount(:,4)+time_datevec_cloud_amount(:,5)./60);
 seasons_before_6am=seasons_for_markov(hours_for_markov<=6);
 cloud_amount_before_6am=cloud_amount(hours_for_markov<=6);
 cloud_amount_before_6am_transitions=[cloud_amount_before_6am(1:end-1),cloud_amount_before_6am(2:end)];

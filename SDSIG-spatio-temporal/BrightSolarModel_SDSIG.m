@@ -81,7 +81,14 @@
 % +---------------------------------------------------------------------+
 
 %% Preamble
-addpath('utility\')
+clear variables;
+clc;
+close all;
+if ispc
+	addpath('utility\')
+else
+	addpath('utility/')
+end
 InitialisePaths
 
 %% SDSIG 

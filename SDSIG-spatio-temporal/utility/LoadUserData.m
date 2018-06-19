@@ -54,7 +54,23 @@
 % order to define the settings for this simulation. The descriptions of
 % what information is required in those settings is described above
 
-fid = fopen('USER_INPUT_DATA\simulation_settings.txt');
+% specify the file name according the operating system
+user_data_file = 'USER_INPUT_DATA\simulation_settings.txt';
+house_data_file = 'USER_INPUT_DATA\house_info.csv';
+cloud_data_file = 'USER_INPUT_DATA\cloud_base_height.csv';
+pressure_data_file = 'USER_INPUT_DATA\pressure.csv';
+cloud_amount_data_file = 'USER_INPUT_DATA\clound_amount.csv';
+wind_data_file = 'USER_INPUT_DATA\wind_speed.csv';
+if ~ ispc
+	% chenge the file name if Unix like OS
+	user_data_file = 'USER_INPUT_DATA/simulation_settings.txt';
+	house_data_file = 'USER_INPUT_DATA/house_info.csv';
+	cloud_data_file = 'USER_INPUT_DATA/cloud_base_height.csv';
+	pressure_data_file = 'USER_INPUT_DATA/pressure.csv';
+	cloud_amount_data_file = 'USER_INPUT_DATA/clound_amount.csv';
+	wind_data_file = 'USER_INPUT_DATA/wind_speed.csv';
+end
+fid = fopen(user_data_file);
 user_data = textscan(fid,'%s%s%f%f%f','delimiter',',','endofline','\r\n','headerlines',1);
 fclose(fid);
 start_day = cell2mat(user_data{1,1});
@@ -71,8 +87,8 @@ height_above_sea_level_central = user_data{1,5};
 %% Load in the house information
 % define the different properties within the simulation
 %  NOTE that this is an arbitrary example to set random properties of X,Y,h,azi and tilt.
-house_info = csvread('house_info.csv',1,0);
-number_of_houses = size(house_info,1);
+house_info = csvread(house_data_file, 1, 0);
+number_of_houses = size(house_info, 1);
 
 %% Load in the raw variables data here.
 % The data is required in a strict 1-hour time series format. Each variable
@@ -91,36 +107,35 @@ number_of_houses = size(house_info,1);
 
 % cloud_base_height should be in deca-meteres (10m = 1 dm). This is the
 % standard format that most ceilometers report to.
-data=csvread('USER_INPUT_DATA\cloud_base_height.csv',1,0);
+data = csvread(cloud_data_file, 1, 0);
 % load the time stamps for the cloud base height.
 time_cloud_base_height = data(:,1);
 % load the cloud base height here
-cloud_base_height =data(:,2); 
+cloud_base_height = data(:,2); 
 clear data
 
 % pressure must be in mb, use space below to convert if necessary.
-data=csvread('USER_INPUT_DATA\pressure.csv',1,0);
+data = csvread(pressure_data_file, 1, 0);
 % load the time stamps for the pressure.
 time_pressure = data(:,1);
 % load the pressure here
-pressure =data(:,2); 
+pressure = data(:,2); 
 clear data
 
 % cloud_amount must be in okta (where 0 to 8 out of 8 describes the
 % fraction of cloud cover in eigths, and 9 okta is for obscurred/haze/mist
 % or other meteorological phenomenon.
-data=csvread('USER_INPUT_DATA\clound_amount.csv',1,0);
+data = csvread(cloud_amount_data_file, 1, 0);
 % load the time stamps for the cloud base height.
 time_cloud_amount = data(:,1);
 % load the cloud base height here
-cloud_amount =data(:,2); 
+cloud_amount = data(:,2); 
 clear data
 
 % wind_speed is the hourly wind_speed measured at 10m (standard) in m/s.
-data=csvread('USER_INPUT_DATA\wind_speed.csv',1,0);
+data = csvread(wind_data_file, 1, 0);
 % load the time stamps for the wind_speed times.
 time_wind_speed = data(:,1);
 % load the wind speed here
-wind_speed =data(:,2); 
+wind_speed = data(:,2);
 clear data
-

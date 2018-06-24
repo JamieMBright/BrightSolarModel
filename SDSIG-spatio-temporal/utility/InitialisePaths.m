@@ -1,9 +1,5 @@
 %% Script to initilise all the file paths where functions are located
-if ispc
-	home_dir=[pwd,'\'];
-else
-	home_dir=[pwd,'/'];
-end
+home_dir = [pwd, filesep];
 addpath(home_dir);
 addpath([home_dir,'supportingfiles']);
 addpath([home_dir,'supportingfiles',filesep,'temporary_files']);

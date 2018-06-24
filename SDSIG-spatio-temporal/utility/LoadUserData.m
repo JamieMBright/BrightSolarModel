@@ -55,21 +55,13 @@
 % what information is required in those settings is described above
 
 % specify the file name according the operating system
-user_data_file = 'USER_INPUT_DATA\simulation_settings.txt';
-house_data_file = 'USER_INPUT_DATA\house_info.csv';
-cloud_data_file = 'USER_INPUT_DATA\cloud_base_height.csv';
-pressure_data_file = 'USER_INPUT_DATA\pressure.csv';
-cloud_amount_data_file = 'USER_INPUT_DATA\clound_amount.csv';
-wind_data_file = 'USER_INPUT_DATA\wind_speed.csv';
-if ~ ispc
-	% chenge the file name if Unix like OS
-	user_data_file = 'USER_INPUT_DATA/simulation_settings.txt';
-	house_data_file = 'USER_INPUT_DATA/house_info.csv';
-	cloud_data_file = 'USER_INPUT_DATA/cloud_base_height.csv';
-	pressure_data_file = 'USER_INPUT_DATA/pressure.csv';
-	cloud_amount_data_file = 'USER_INPUT_DATA/clound_amount.csv';
-	wind_data_file = 'USER_INPUT_DATA/wind_speed.csv';
-end
+user_data_file = ['USER_INPUT_DATA',filesep,'simulation_settings.txt'];
+house_data_file = ['USER_INPUT_DATA',filesep,'house_info.csv'];
+cloud_data_file = ['USER_INPUT_DATA',filesep,'cloud_base_height.csv'];
+pressure_data_file = ['USER_INPUT_DATA',filesep,'pressure.csv'];
+cloud_amount_data_file = ['USER_INPUT_DATA',filesep,'clound_amount.csv'];
+wind_data_file = ['USER_INPUT_DATA',filesep,'wind_speed.csv'];
+
 fid = fopen(user_data_file);
 user_data = textscan(fid,'%s%s%f%f%f','delimiter',',','endofline','\r\n','headerlines',1);
 fclose(fid);

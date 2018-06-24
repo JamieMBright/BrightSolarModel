@@ -37,26 +37,26 @@ Rayleigh(airmass>=20) = 1./(10.4+0.718.*airmass(airmass>=20));
 
 disp('Extracting Linke turbidity');
 
-if ~exist('supportingfiles\linke\LinkeTurbidity_Summary.mat','file')
+if ~exist(['supportingfiles',filesep,'linke',filesep,'LinkeTurbidity_Summary.mat'],'file')
     % Retrieve Linke Turbidity for nearest 1/12 degree grid square and month
     % from the SoDa monthly data files.
     % Conversion:Linke Turbidity = greyscale_value/20
-    tiffData = Tiff('supportingfiles/linke/January.tif','r');   loadup = single(tiffData.read())/20; TL(:,:,1)=loadup; tiffData.close();
-    tiffData = Tiff('supportingfiles/linke/February.tif','r');  loadup = single(tiffData.read())/20; TL(:,:,2)=loadup; tiffData.close();
-    tiffData = Tiff('supportingfiles/linke/March.tif','r');     loadup = single(tiffData.read())/20; TL(:,:,3)=loadup; tiffData.close();
-    tiffData = Tiff('supportingfiles/linke/April.tif','r');     loadup = single(tiffData.read())/20; TL(:,:,4)=loadup; tiffData.close();
-    tiffData = Tiff('supportingfiles/linke/May.tif','r');       loadup = single(tiffData.read())/20; TL(:,:,5)=loadup; tiffData.close();
-    tiffData = Tiff('supportingfiles/linke/June.tif','r');      loadup = single(tiffData.read())/20; TL(:,:,6)=loadup;  tiffData.close();
-    tiffData = Tiff('supportingfiles/linke/July.tif','r');      loadup = single(tiffData.read())/20; TL(:,:,7)=loadup;  tiffData.close();
-    tiffData = Tiff('supportingfiles/linke/August.tif','r');    loadup = single(tiffData.read())/20; TL(:,:,8)=loadup;  tiffData.close();
-    tiffData = Tiff('supportingfiles/linke/September.tif','r'); loadup = single(tiffData.read())/20; TL(:,:,9)=loadup;  tiffData.close();
-    tiffData = Tiff('supportingfiles/linke/October.tif','r');   loadup = single(tiffData.read())/20; TL(:,:,10)=loadup;  tiffData.close();
-    tiffData = Tiff('supportingfiles/linke/November.tif','r');  loadup = single(tiffData.read())/20; TL(:,:,11)=loadup;  tiffData.close();
-    tiffData = Tiff('supportingfiles/linke/December.tif','r');  loadup = single(tiffData.read())/20; TL(:,:,12)=loadup;  tiffData.close();
+    tiffData = Tiff(['supportingfiles',filesep,'linke',filesep,'January.tif'],'r');   loadup = single(tiffData.read())/20; TL(:,:,1)=loadup; tiffData.close();
+    tiffData = Tiff(['supportingfiles',filesep,'linke',filesep,'February.tif'],'r');  loadup = single(tiffData.read())/20; TL(:,:,2)=loadup; tiffData.close();
+    tiffData = Tiff(['supportingfiles',filesep,'linke',filesep,'March.tif'],'r');     loadup = single(tiffData.read())/20; TL(:,:,3)=loadup; tiffData.close();
+    tiffData = Tiff(['supportingfiles',filesep,'linke',filesep,'April.tif'],'r');     loadup = single(tiffData.read())/20; TL(:,:,4)=loadup; tiffData.close();
+    tiffData = Tiff(['supportingfiles',filesep,'linke',filesep,'May.tif'],'r');       loadup = single(tiffData.read())/20; TL(:,:,5)=loadup; tiffData.close();
+    tiffData = Tiff(['supportingfiles',filesep,'linke',filesep,'June.tif'],'r');      loadup = single(tiffData.read())/20; TL(:,:,6)=loadup;  tiffData.close();
+    tiffData = Tiff(['supportingfiles',filesep,'linke',filesep,'July.tif'],'r');      loadup = single(tiffData.read())/20; TL(:,:,7)=loadup;  tiffData.close();
+    tiffData = Tiff(['supportingfiles',filesep,'linke',filesep,'August.tif'],'r');    loadup = single(tiffData.read())/20; TL(:,:,8)=loadup;  tiffData.close();
+    tiffData = Tiff(['supportingfiles',filesep,'linke',filesep,'September.tif'],'r'); loadup = single(tiffData.read())/20; TL(:,:,9)=loadup;  tiffData.close();
+    tiffData = Tiff(['supportingfiles',filesep,'linke',filesep,'October.tif'],'r');   loadup = single(tiffData.read())/20; TL(:,:,10)=loadup;  tiffData.close();
+    tiffData = Tiff(['supportingfiles',filesep,'linke',filesep,'November.tif'],'r');  loadup = single(tiffData.read())/20; TL(:,:,11)=loadup;  tiffData.close();
+    tiffData = Tiff(['supportingfiles',filesep,'linke',filesep,'December.tif'],'r');  loadup = single(tiffData.read())/20; TL(:,:,12)=loadup;  tiffData.close();
     clear tiffData loadup%clear all the tiff data.
-    save('supportingfiles\linke\LinkeTurbidity_Summary.mat','TL');
+    save(['supportingfiles',filesep,'linke',filesep,'LinkeTurbidity_Summary.mat'],'TL');
 else
-   load('supportingfiles\linke\LinkeTurbidity_Summary.mat');
+   load(['supportingfiles',filesep,'linke',filesep,'LinkeTurbidity_Summary.mat']);
 end
 % find the latitude_central and longitude reference within the TL images
 TL2_lon=linspace(-180,180,size(TL,2));

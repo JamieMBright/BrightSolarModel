@@ -242,10 +242,10 @@ for Hour =1:length(time) %loop every hour in the simulation
         end
     end
     
-   %% write separation house_kcvalues and house_coverages
-   for house=1:number_of_houses
-            dlmwrite(['supportingfiles',filesep,'temporary_files',filesep,'separation_',num2str(house),'.txt'],separation(house,:),'-append');
-            dlmwrite(['supportingfiles',filesep,'temporary_files',filesep,'house_kcvalues_',num2str(house),'.txt'],house_kcvalues(house,:),'-append');
-            dlmwrite(['supportingfiles',filesep,'temporary_files',filesep,'house_coverages_',num2str(house),'.txt'],house_coverages(house,:),'-append');
+    %% write separation house_kcvalues and house_coverages
+    for house=1:number_of_houses
+        dlmwrite(['supportingfiles',filesep,'temporary_files',filesep,'separation_',num2str(house),'.txt'],separation(house,:),'-append');
+        dlmwrite(['supportingfiles',filesep,'temporary_files',filesep,'house_kcvalues_',num2str(house),'.txt'],house_kcvalues(house,:),'-append');
+        dlmwrite(['supportingfiles',filesep,'temporary_files',filesep,'house_coverages_',num2str(house),'.txt'],house_coverages(house,:),'-append');
    end
 end

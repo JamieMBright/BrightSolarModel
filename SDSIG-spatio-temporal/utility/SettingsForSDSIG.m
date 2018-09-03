@@ -135,13 +135,21 @@ proposed_memory_requirements = number_of_cloud_fields * cloud_field_memory;
 
 %% Saftey checks on memory requirements
 % Get the user's memory specs.
-[userview,systemview] = memory;
+sys_mem = 0.;
+if ispc
+	[userview,systemview] = memory;
+	sys_mem = userview.MemAvailableAllArrays;	
+else
+	[r,w] = unix('free -b | grep Mem');
+	stats = str2double(regexp(w, '[0-9]*', 'match'));
+	sys_mem = stats(end);
+end
 
-if proposed_memory_requirements > userview.MemAvailableAllArrays/2
+if proposed_memory_requirements > sys_mem / 2.
     warning('Possible that the cloud field settings will demand too much system RAM')
 end
 
-if proposed_memory_requirements > userview.MemAvailableAllArrays/1.3
+if proposed_memory_requirements > sys_mem / 1.3
    error('The proposed cloud field sizings requires more PC memory than is available. Try reducing spatial_res or num_of_samples')
 end
 

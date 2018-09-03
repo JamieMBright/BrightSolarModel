@@ -14,8 +14,15 @@ disp('Applying cloud edge enhancements and long term clear and overcast statisti
 disp('Calculating the tilted irradiance...')
 
 % check available memory
-[userview,systemview] = memory;
-available_memory = userview.MemAvailableAllArrays;
+available_memory = 0.;
+if ispc
+    [userview,systemview] = memory;
+    available_memory = userview.MemAvailableAllArrays;   
+else
+    [r,w] = unix('free -b | grep Mem');
+    stats = str2double(regexp(w, '[0-9]*', 'match'));
+    available_memory = stats(end);
+end
 required_memory = 8 * length(time_1min_resolution) * number_of_houses * 2;
 
 if available_memory*0.6666 > required_memory

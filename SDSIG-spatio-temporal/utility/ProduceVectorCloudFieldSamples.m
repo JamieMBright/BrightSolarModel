@@ -35,52 +35,14 @@ for u=1:u_range
         samples=0;
         tic
         
-        cloud_x_min=5;%minimum cloud length (decameters). Power law applicible to 0.1-1500km (Wood & Field,2011)
-        cloud_x_max=200;%maximum cloud length (decameters). (decameters selected as 10m=1 element resolution within vector)
         
+        cloud_x_min=5*C+u;%minimum cloud length (decameters). Power law applicible to 0.1-1500km (Wood & Field,2011)
+        cloud_x_max=20*C+100+u*10;%maximum cloud length (decameters). (decameters selected as 10m=1 element resolution within vector)
         alpha=cloud_x_max^(1-B); %to set power law {p(x)=Cx^-B} between limits and select random value...
         beta=cloud_x_min^(1-B) - alpha; % powerlaw becomes x=(alpha+beta*rand)^(1/(1-B)). rand==0 gives x_max. rand==1 gives x_min.
-        %
-        %         switch C
-        %             case {0}
-        %                 cloud_x_min=1;%minimum cloud length (decameters). Power law applicible to 0.1-1500km (Wood & Field,2011)
-        %                 cloud_x_max=150;%maximum cloud length (decameters). (decameters selected as 10m=1 element resolution within vector)
-        
-        %             case {1,2}%1,2
-        %                 cloud_x_min=1+u/3;%minimum cloud length (decameters). Power law applicible to 0.1-1500km (Wood & Field,2011)
-        %                 cloud_x_max=150+u;%maximum cloud length (decameters). (decameters selected as 10m=1 element resolution within vector)
-        %                 alpha=cloud_x_max^(1-B); %to set power law {p(x)=Cx^-B} between limits and select random value...
-        %                 beta=cloud_x_min^(1-B) - alpha; % powerlaw becomes x=(alpha+beta*rand)^(1/(1-B)). rand==0 gives x_max. rand==1 gives x_min.
-        %
-        %
-        %             case {3}%4,5,6
-        %                 cloud_x_min=5+u/3;
-        %                 cloud_x_max=175+u;
-        %                 alpha=cloud_x_max^(1-B); %to set power law {p(x)=Cx^-B} between limits and select random value...
-        %                 beta=cloud_x_min^(1-B) - alpha; % powerlaw becomes x=(alpha+beta*rand)^(1/(1-B)). rand==0 gives x_max. rand==1 gives x_min.
-        %
-        %
-        %             case {6,7}
-        %                 cloud_x_min=10+u/3;
-        %                 cloud_x_max=200+u;
-        %                 alpha=cloud_x_max^(1-B); %to set power law {p(x)=Cx^-B} between limits and select random value...
-        %                 beta=cloud_x_min^(1-B) - alpha; % powerlaw becomes x=(alpha+beta*rand)^(1/(1-B)). rand==0 gives x_max. rand==1 gives x_min.
-        %             case {9}
-        %                 cloud_x_min=20+u/3;
-        %                 cloud_x_max=250+u*2;
-        %                 alpha=cloud_x_max^(1-B); %to set power law {p(x)=Cx^-B} between limits and select random value...
-        %                 beta=cloud_x_min^(1-B) - alpha; % powerlaw becomes x=(alpha+beta*rand)^(1/(1-B)). rand==0 gives x_max. rand==1 gives x_min.
-        %
-        %             case {10}
-        if C==10
-            cloud_x_min=30+u;
-            cloud_x_max=400+u;
-            alpha=cloud_x_max^(1-B); %to set power law {p(x)=Cx^-B} between limits and select random value...
-            beta=cloud_x_min^(1-B) - alpha; % powerlaw becomes x=(alpha+beta*rand)^(1/(1-B)). rand==0 gives x_max. rand==1 gives x_min.
-            
-        end
         
         
+        clouds_per_time=C;
         while samples < num_of_samples
             coverage = -1;
             iterations_of_cloud_additions = 0;
@@ -90,15 +52,14 @@ for u=1:u_range
             %             if C==0; C=C+0.4*rand;end %nature of while loop will end the sample on first addition of clouds, set target >0 by shifting to to 0:0.4 randomly,will introduce more variety in clearsky.
             while coverage < C
                 
-                
-                %Add clouds cloud
-                clouds_per_time=1;
+                %Add clouds
                 iterations_of_cloud_additions=iterations_of_cloud_additions+1;
                 num_of_clouds=clouds_per_time*iterations_of_cloud_additions;
-                if num_of_clouds>max_num_of_clouds;error_flag=1; end
+                if num_of_clouds>max_num_of_clouds
+                    error_flag=1;
+                end
                 if error_flag==1
-                    disp('ERROR: max number of clouds exceeded');
-                    break
+                    error(' max number of clouds exceeded');
                 end
                 
                 for i=num_of_clouds-(clouds_per_time-1):num_of_clouds
@@ -126,7 +87,7 @@ for u=1:u_range
                     
                     distances_to_cloud_centres=sqrt((output_x(1:num_of_clouds)-xref).^2+(output_y(1:num_of_clouds)-yref).^2); %find the distances to the centre point of each circle using pythagoras to find the hypotenuse of a right angled triangle with sides of dx and dy
                     
-                    if max(distances_to_cloud_centres<output_r(1:num_of_clouds))==1; %  dist_to_cloud<chekr returns a binary array with 1 if the distance to cloud centre is less than r, and 0 if not. therefore the max of this array will return 1 or 0. If the answer is 1 then the (xref,yref) coordinate is within a cloud's radius, and therefore covered.
+                    if max(distances_to_cloud_centres<output_r(1:num_of_clouds))==1 %  dist_to_cloud<chekr returns a binary array with 1 if the distance to cloud centre is less than r, and 0 if not. therefore the max of this array will return 1 or 0. If the answer is 1 then the (xref,yref) coordinate is within a cloud's radius, and therefore covered.
                         covered_tally=covered_tally+1; %if it is covered, add a point to the tally
                     end
                     
@@ -226,12 +187,12 @@ if error_flag==0
     
     
     
-    %write the files out from matrix "samples"
+    %% write the files out from matrix "samples"
     disp('Writing Files')
     for i=0:c_range-1
         string=['samples',num2str(i)];
         X=eval(string);
         dlmwrite([home_dir,'supportingfiles',filesep,'V2_clouds_vectors_sample',num2str(i),'__temporal_res_',num2str(temporal_res),'__spatial_res_',num2str(spatial_res),'__',num2str(num_of_samples),'_num_of_samples','__',num2str(max_num_of_clouds),'max_num_of_clouds.txt'],X)
     end
-
+    
 end

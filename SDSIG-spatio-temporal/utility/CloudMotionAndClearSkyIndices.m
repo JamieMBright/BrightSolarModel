@@ -18,7 +18,7 @@ coeff.scale =  dataArray{1,5}; % parameters
 coeff.shape1 =  dataArray{1,6};
 coeff.shape2 =  dataArray{1,7};
 %select range to draw distributions from. if started at 0, Nan would be given and would disrupt future script. 2 is a contingency and highly rare except at low zeniths.
-distribution_range=0.01:0.01:2; 
+distribution_range=0.01:0.01:2;
 
 %% Set initial house orientations.
 % because the cloud motion simulates the clouds coming in from the "right"
@@ -46,17 +46,17 @@ for Hour =1:length(time) %loop every hour in the simulation
         disp([num2str(round(100*Hour/length(time))),'% complete'])
     end
     
-     %extract the okta for that hour
-    this_hour_okta=cloud_amount_sim(Hour);    
+    %extract the okta for that hour
+    this_hour_okta=cloud_amount_sim(Hour);
     %determine the lowest elevation within that hour (from the 1-min-res vector) rounded to nearest 10.
     elev_hour=round(min(elevation(Hour*temporal_res-(temporal_res-1):Hour*temporal_res))/10)*10;
     
     if Hour>1 % For all hours after the very first in the simulation..
         %the current cloud field is set the previous hour's future cloud field, and so only need to load new xyr2
-        xyr=xyr2; 
+        xyr=xyr2;
         dir_ref = dir_ref_next;
         u_ref = u_ref_next;
-       
+        
     else %for the first hour, create the cloud field.
         %extract the weather data to select appropriate cloud field.
         u_ref=wind_speed_sim(Hour); %cloudspeed
@@ -95,24 +95,24 @@ for Hour =1:length(time) %loop every hour in the simulation
     r1=xyr(:,3); r1=r1(r1>0);
     x1=xyr(:,1); x1=x1(r1>0);
     y1=xyr(:,2); y1=y1(r1>0);
-    kc1 = zeros(1,numel(r1>0)); 
-        
+    kc1 = zeros(1,numel(r1>0));
+    
     %% Assign kc values to each cloud
     if elev_hour<0 %if the elevation angle is below 0, the sun is set and it is unimportant, so skip and save time
     else
         CompoundConditionInd= ((coeff.elevmin==elev_hour) & (coeff.okta1==this_hour_okta)); %find the appropriate row reference for the distribution parameters within the coefficients.csv file using compound logical statment
-        switch this_hour_okta 
+        switch this_hour_okta
             case {0,1,2,3} %okta 0:3 all use a BurrIII distribution
-
+                
                 %extract the shape and scale parameters from coefficients.csv using the indicator CompoundConditionalInd
-                alpha_ScaleParameter=coeff.scale(CompoundConditionInd==1); 
+                alpha_ScaleParameter=coeff.scale(CompoundConditionInd==1);
                 c_ShapeParameter=coeff.shape1(CompoundConditionInd==1);
                 k_ShapeParameter=coeff.shape2(CompoundConditionInd==1);
-
+                
                 %Create the BurrIII distribution PDF using the paramaters above
                 burrIIIPDF=((c_ShapeParameter.*k_ShapeParameter)./alpha_ScaleParameter).*(distribution_range./alpha_ScaleParameter).^(-c_ShapeParameter-1).*(1+(distribution_range./alpha_ScaleParameter).^(-c_ShapeParameter)).^(-k_ShapeParameter-1);
                 burrIIICDF=cumsum(burrIIIPDF)./100; %make CDF.
-              
+                
                 %assign each cloud a kc value from the new distribution
                 for ii=1:numel(r1>0)
                     kc1(ii)=sum(burrIIICDF<rand)./100;
@@ -129,12 +129,12 @@ for Hour =1:length(time) %loop every hour in the simulation
                 
                 %assign each cloud a kc value from the new distribution
                 for ii=1:numel(r1>0)
-                    kc1(ii)=sum(genGammaCDF<rand)./100; 
+                    kc1(ii)=sum(genGammaCDF<rand)./100;
                 end
         end
     end
     
-%% Now perform the same for the future hour.
+    %% Now perform the same for the future hour.
     if Hour<(length(time)-1) %so long as it is not the end of the simulation...
         
         u_ref_next=wind_speed_sim(Hour+1); %cloudspeed
@@ -173,9 +173,9 @@ for Hour =1:length(time) %loop every hour in the simulation
         kc2 = zeros(1,numel(r2>0));
         
         %% Apply KC
-        if elev_hour<0             
+        if elev_hour<0
         else
-            CompoundConditionInd= (coeff.elevmin==elev_hour) & (coeff.okta1==this_hour_okta); 
+            CompoundConditionInd= (coeff.elevmin==elev_hour) & (coeff.okta1==this_hour_okta);
             switch this_hour_okta %loop through each moment within the temporary, hourly okta factored vector
                 case {0,1,2,3} %okta 0:3 all use a BurrIII distribution
                     alpha_ScaleParameter=coeff.scale(CompoundConditionInd==1);
@@ -184,19 +184,19 @@ for Hour =1:length(time) %loop every hour in the simulation
                     burrIIIPDF= ((c_ShapeParameter.*k_ShapeParameter)./alpha_ScaleParameter).*...
                         (distribution_range./alpha_ScaleParameter).^(-c_ShapeParameter-1).*...
                         (1+(distribution_range./alpha_ScaleParameter).^(-c_ShapeParameter)).^(-k_ShapeParameter-1);
-                    burrIIICDF=cumsum(burrIIIPDF)./100; 
+                    burrIIICDF=cumsum(burrIIIPDF)./100;
                     for ii=1:numel(r2>0)
                         kc2(ii)=sum(burrIIICDF<rand)./100;
                     end
                     
                 case {4,5,6,7,8,9} %okta 4:9 use a generalised Gamma function
-                    a_ScaleParameter=coeff.scale(CompoundConditionInd==1); 
+                    a_ScaleParameter=coeff.scale(CompoundConditionInd==1);
                     p_ShapeParameter=coeff.shape1(CompoundConditionInd==1);
                     d_ShapeParameter=coeff.shape2(CompoundConditionInd==1);
                     genGammaPDF=(p_ShapeParameter.*distribution_range.^(d_ShapeParameter-1).*...
                         exp(-(distribution_range./a_ScaleParameter).^p_ShapeParameter))./...
                         (a_ScaleParameter.^d_ShapeParameter.*gamma(d_ShapeParameter./p_ShapeParameter));
-                    genGammaCDF=cumsum(genGammaPDF)./100; 
+                    genGammaCDF=cumsum(genGammaPDF)./100;
                     for ii=1:numel(r2>0)
                         kc2(ii)=sum(genGammaCDF<rand)./100;
                     end
@@ -204,48 +204,50 @@ for Hour =1:length(time) %loop every hour in the simulation
         end
         
     end
-        
-%% Move the clouds for this hour
-        %pre allocate for computational efficiency. 
-        separation=zeros(number_of_houses,60); %1 row per location
-        house_coverages=zeros(number_of_houses,60);%60 mins=cols
-        house_kcvalues=zeros(number_of_houses,60); 
-        
+    
+    %% Move the clouds for this hour
+    %pre allocate for computational efficiency.
+    separation=zeros(number_of_houses,60); %1 row per location
+    house_coverages=zeros(number_of_houses,60);%60 mins=cols
+    house_kcvalues=zeros(number_of_houses,60);
+    
+    % This section is what takes the most time. The following for loop
+    % moves 1-min at a time and then loops throgh each house. This
+    % ultimately results in a loop of hour,minute,house. Inefficient.
+    
+    % attach together the cloud fields
+    r_C1=[r1;r2]; %combine the radii from both cloud fields
+    x_C1=[x1-3600*u_ref;x2]; %combine coordinates of clouds adjusting x by the size of the cloud field domain
+    y_C1=[y1;y2]; %combine y coordinates of two fields
+    kc_C1=repmat([kc1';kc2'],[1,number_of_houses]); %combine kc values of all.
+    clouds=length(r_C1(r_C1>0)); %determine the number of clouds within the cloud domain
+    
+    [house_x_rotated,house_y_rotated]=MatricesRotation(dir_ref,house_xs,house_ys,spatial_res);
+    dxd=spatial_res-house_x_rotated; %distance: house x location to far edge of domain edge
+    
     
     for cloudmovement=1:temporal_res %move the clouds looping each time step
-        
-        for house=1:number_of_houses %take each house at a time
-            %orientate by the cloud direction
-            [house_x_rotated,house_y_rotated]=MatricesRotation(dir_ref,house_xs(house),house_ys(house),spatial_res); 
-            dxd=spatial_res-house_x_rotated; %distance: house x location to far edge of domain edge
-            dX=cloudmovement*(3600/temporal_res)*u_ref_next; %Distance: house domain and cloud domain overlap
-            dxeC2=dxd-dX+u_ref*3600; %distance: house to far edge of cloud field
-            separation(house,cloudmovement)=house_x_rotated;
-            
-            % attach together the cloud fields
-            r_C1=[r1;r2]; %combine the radii from both cloud fields
-            x_C1=[x1-3600*u_ref;x2]; %combine coordinates of clouds adjusting x by the size of the cloud field domain
-            y_C1=[y1;y2]; %combine y coordinates of two fields
-            kc_C1=[kc1';kc2']; %combine kc values of all.
+        dX=cloudmovement*(3600/temporal_res)*u_ref_next; %Distance: house domain and cloud domain overlap
+        dxeC2=dxd-dX+u_ref*3600; %distance: house to far edge of cloud field
+        separation(:,cloudmovement)=house_x_rotated;
                 
-            clouds=length(r_C1(r_C1>0)); %determine the number of clouds within the cloud domain
-            if clouds>0 %so long as clouds are present...
-                dx=dxd+x_C1-dX; % distance along x axis from house to cloud centre
-                dy=house_y_rotated-y_C1; %distance in y direction of house to cloud
-                d=sqrt(dx.^2+dy.^2); %direct line from house to cloud
-                house_coverages(house,cloudmovement)=sum(d<r_C1(r_C1>0)); %record how many clouds are covering the house
-                kcs1=kc_C1(d<r_C1); %extract appropriate kc values that cover the house
-                if isempty(kcs1)==0
-                    house_kcvalues(house,cloudmovement)=mean(kcs1); %take a mean of the kc values
-                end
+        if clouds>0 %so long as clouds are present...
+            dx=dxd'+repmat(x_C1,[1,number_of_houses])-dX; % distance along x axis from house to cloud centre
+            dy=house_y_rotated'-repmat(y_C1,[1,number_of_houses]); %distance in y direction of house to cloud
+            d=sqrt(dx.^2+dy.^2); %direct line from house to cloud
+            house_coverages(:,cloudmovement)=(sum(d<r_C1(r_C1>0)))'; %record how many clouds are covering the house
+            kcs1=kc_C1(d<repmat(r_C1,[1,number_of_houses])); %extract appropriate kc values that cover the house
+            if isempty(kcs1)==0
+                house_kcvalues(:,cloudmovement)=mean(kcs1); %take a mean of the kc values
             end
+   
         end
     end
     
-   %% write separation house_kcvalues and house_coverages
-   for house=1:number_of_houses
-            dlmwrite(['supportingfiles',filesep,'temporary_files',filesep,'separation_',num2str(house),'.txt'],separation(house,:),'-append');
-            dlmwrite(['supportingfiles',filesep,'temporary_files',filesep,'house_kcvalues_',num2str(house),'.txt'],house_kcvalues(house,:),'-append');
-            dlmwrite(['supportingfiles',filesep,'temporary_files',filesep,'house_coverages_',num2str(house),'.txt'],house_coverages(house,:),'-append');
-   end
+    %% write separation house_kcvalues and house_coverages
+    for house=1:number_of_houses
+        dlmwrite(['supportingfiles',filesep,'temporary_files',filesep,'separation_',num2str(house),'.txt'],separation(house,:),'-append');
+        dlmwrite(['supportingfiles',filesep,'temporary_files',filesep,'house_kcvalues_',num2str(house),'.txt'],house_kcvalues(house,:),'-append');
+        dlmwrite(['supportingfiles',filesep,'temporary_files',filesep,'house_coverages_',num2str(house),'.txt'],house_coverages(house,:),'-append');
+    end
 end

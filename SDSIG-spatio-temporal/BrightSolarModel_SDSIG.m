@@ -38,7 +38,7 @@
 % +---------------------------------------------------------------------+
 % | Please adhere to license. Appropriate citaion is required.          |
 % +---------------------------------------------------------------------+
-% |                 Required citations for full use                     |
+% |                 Required citations for use                          |
 % |   SIG originally developed:                                         |
 % | Bright, Jamie M.; Smith, Chris .J; Taylor, Peter G.; Crook, R. 2015.|
 % | Stochastic generation of synthetic minutely irradiance time series  |
@@ -76,7 +76,7 @@
 % | Created by: Dr Jamie M. Bright                                      |
 % | Contributors: Dr Chris Smith, Dr Rolf Crook and Prof Peter G. Taylor|
 % +---------------------------------------------------------------------+
-% | Date completed: 30/01/2015                                          |
+% | Date completed: 30/01/2017                                          |
 % | Code base updated on: 30/05/2018                                    |
 % +---------------------------------------------------------------------+
 

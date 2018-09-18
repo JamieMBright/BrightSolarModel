@@ -9,6 +9,11 @@
 % clear the outputs folder
 delete(['outputs',filesep,'*']);
 
+% make sure the outputs folder actually exists
+if ~exist('outputs','dir')
+    mkdir('outputs');
+end
+
 % reporting
 disp('Applying cloud edge enhancements and long term clear and overcast statistics to clear-sky index')
 disp('Calculating the tilted irradiance...')

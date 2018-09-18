@@ -2,8 +2,8 @@
 %% input variables
 
 B=1.66; % Power Law Exponent /// p(x)=Cx^-B ///  (Wood & Field, 2011, Journal of Climate, Volume 24, p4800).
-cloud_x_min=20;%minimum cloud length (decameters). Power law applicible to 0.1-1500km (Wood & Field,2011)
-cloud_x_max=20;%maximum cloud length (decameters). (decameters selected as 10m=1 element resolution within vector)
+%minimum cloud length (decameters). Power law applicible to 0.1-1500km (Wood & Field,2011)
+%maximum cloud length (decameters). (decameters selected as 10m=1 element resolution within vector)
 
 %% make the blank arrays to pre-allocate memory.
 samples0=zeros(max_num_of_clouds*u_range,3*num_of_samples); %make output arrays (filled with 3(xyr) x max_num_of_clouds options)
@@ -19,22 +19,7 @@ samples9=zeros(max_num_of_clouds*u_range,3*num_of_samples);
 samples10=zeros(max_num_of_clouds*u_range,3*num_of_samples);
 
 %% The Loop
-% for u=1:u_range; % cycle through each cloud speed, u
-%
-%     tic
-%     %set maximum x length. This is an hours distance, x=u*t. where t=number of seconds in an hour = 3600.
-%x=u(m/s)*s/h, therefore in metres per hour.
-%
-%     coverage_bins=ones(1,coverage_range); %to keep a tally of the number of options.
-% %     checker=1;
-%     while sum(coverage_bins)~=(num_of_samples+1)*coverage_range %while each coverage value does not have the required number of samples, repeat until this is so. REINTRODUCE
-%
-%         %% set number of clouds
-%         num_of_clouds=2000;%round((max_num_of_clouds-((u_range-u)*6.4))*rand);
-%
-%         % Make the output array (all these output arrays are uniform, so that referencing them within the solar model is also uniform)
 
-%
 clouds_store=zeros(u_range*c_range*num_of_samples,1);
 u_store=zeros(u_range*c_range*num_of_samples,1);
 C_store=zeros(u_range*c_range*num_of_samples,1);
@@ -111,15 +96,15 @@ for u=1:u_range
                 iterations_of_cloud_additions=iterations_of_cloud_additions+1;
                 num_of_clouds=clouds_per_time*iterations_of_cloud_additions;
                 if num_of_clouds>max_num_of_clouds;error_flag=1; end
-                if error_flag==1;
+                if error_flag==1
                     disp('ERROR: max number of clouds exceeded');
                     break
                 end
                 
-                for i=num_of_clouds-(clouds_per_time-1):num_of_clouds;
+                for i=num_of_clouds-(clouds_per_time-1):num_of_clouds
                     output_x(i,1)=rand*domain_x_max; %place the centrepoint within the x domain
                     output_y(i,1)=rand*domain_y_max; %place the centerpoint within the y domain
-                    output_r(i,1)=1000;%10*0.5*((alpha+beta*rand)^(1/(1-B))); %radius according to power law. in meters.
+                    output_r(i,1)=10*0.5*((alpha+beta*rand)^(1/(1-B))); %radius according to power law. in meters.
                 end
                 %Analyse Coverage Value
                 %the coverage will be calculated by regarding the domain area to be a set of xy coordinates. The exact area covered within the

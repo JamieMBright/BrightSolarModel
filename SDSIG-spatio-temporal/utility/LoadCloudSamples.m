@@ -22,10 +22,10 @@ else
     disp(['  there are ',num2str(u_range),' different wind speeds'])
     disp(['  there are ',num2str(c_range),' different cloud cover scenarios'])
     disp(['  there are ',num2str(num_of_samples),' number of cloud samples'])
-    disp(['  each with ',num2str(num_of_clouds),' clouds in each'])
-    disp([' the result is ',num2str(c_range),' files, each of',num2str(u_range*num_of_samples*3*num_of_clouds),' double elements in size'])
-    disp([' the memory demanded is, therefore, ',num2str(c_range*u_range*num_of_samples*3*num_of_clouds*8), ' Bytes'])
-    disp([' each file is ',num2str(u_range*num_of_samples*3*num_of_clouds*8), ' Bytes'])
+    disp(['  each with ',num2str(max_num_of_clouds),' clouds in each'])
+    disp([' the result is ',num2str(c_range),' files, each of ',num2str(u_range*num_of_samples*3*max_num_of_clouds),' double elements in size'])
+    disp([' the memory demanded is, therefore, ',num2str(c_range*u_range*num_of_samples*3*max_num_of_clouds*8), ' Bytes'])
+    disp([' each file is ',num2str(u_range*num_of_samples*3*max_num_of_clouds*8), ' Bytes'])
     ProduceVectorCloudFieldSamples
     
     disp('Loading store of cloud samples')

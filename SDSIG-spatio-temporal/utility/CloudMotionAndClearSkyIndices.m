@@ -29,23 +29,13 @@ distribution_range=0.01:0.01:2;
 
 
 %% Cloud motion and clear-sky time series production
-disp('Moving cloud fields across spatial domain. This may take some time')
-disp(' Process: ')
-disp('  1) select cloud field')
-disp('  2) assign clear-sky indices to each cloud based of distribution')
-disp('  3) move the cloud field across the houses and record time series')
-disp('  4) persist each house values to disk, easier to manage many sites')
-
+disp('Moving cloud fields across spatial domain: ')
 % Clear the temporary files.
 delete(['supportingfiles',filesep,'temporary_files',filesep,'*']);
-
+% initialise progress bar.
+textprogressbar('Cloud motion: ');
 for Hour =1:length(time) %loop every hour in the simulation
-    
-    %     reporting every 10% completion
-    if mod((100*Hour/length(time)),10)==0
-        disp([num2str(round(100*Hour/length(time))),'% complete'])
-    end
-    
+
     %extract the okta for that hour
     this_hour_okta=cloud_amount_sim(Hour);
     %determine the lowest elevation within that hour (from the 1-min-res vector) rounded to nearest 10.
@@ -206,42 +196,39 @@ for Hour =1:length(time) %loop every hour in the simulation
     end
     
     %% Move the clouds for this hour
-    %pre allocate for computational efficiency.
-    separation=zeros(number_of_houses,60); %1 row per location
-    house_coverages=zeros(number_of_houses,60);%60 mins=cols
-    house_kcvalues=zeros(number_of_houses,60);
-    
-    % This section is what takes the most time. The following for loop
-    % moves 1-min at a time and then loops throgh each house. This
-    % ultimately results in a loop of hour,minute,house. Inefficient.
-    
+
     % attach together the cloud fields
     r_C1=[r1;r2]; %combine the radii from both cloud fields
     x_C1=[x1-3600*u_ref;x2]; %combine coordinates of clouds adjusting x by the size of the cloud field domain
     y_C1=[y1;y2]; %combine y coordinates of two fields
-    kc_C1=repmat([kc1';kc2'],[1,number_of_houses]); %combine kc values of all.
+    kc_C1=repmat([kc1';kc2'],[1,number_of_houses,temporal_res]); %combine kc values of all.
     clouds=length(r_C1(r_C1>0)); %determine the number of clouds within the cloud domain
     
     [house_x_rotated,house_y_rotated]=MatricesRotation(dir_ref,house_xs,house_ys,spatial_res);
     dxd=spatial_res-house_x_rotated; %distance: house x location to far edge of domain edge
+    separation=repmat(house_x_rotated,[1,temporal_res]);
     
-    
-    for cloudmovement=1:temporal_res %move the clouds looping each time step
-        dX=cloudmovement*(3600/temporal_res)*u_ref_next; %Distance: house domain and cloud domain overlap
-        dxeC2=dxd-dX+u_ref*3600; %distance: house to far edge of cloud field
-        separation(:,cloudmovement)=house_x_rotated;
-                
+    if elev_hour<0
+        %default the values for this hour as they are just NaN anyway.
+        house_kcvalues = NaN.*zeros(number_of_houses,60);
+        house_coverages = NaN.* zeros(number_of_houses,60);
+    else
         if clouds>0 %so long as clouds are present...
-            dx=dxd'+repmat(x_C1,[1,number_of_houses])-dX; % distance along x axis from house to cloud centre
-            dy=house_y_rotated'-repmat(y_C1,[1,number_of_houses]); %distance in y direction of house to cloud
+            clear dX
+            dX(1,1,:)= (1:temporal_res)'.*(3600/temporal_res).*u_ref_next; %Distance: house domain and cloud domain overlap
+            dX = repmat(dX,[length(x_C1),number_of_houses,1]);
+            dx=repmat(dxd'+repmat(x_C1,[1,number_of_houses]),[1,1,temporal_res])-dX; % distance along x axis from house to cloud centre
+            dy=repmat(house_y_rotated'-repmat(y_C1,[1,number_of_houses]),[1,1,temporal_res]); %distance in y direction of house to cloud
             d=sqrt(dx.^2+dy.^2); %direct line from house to cloud
-            house_coverages(:,cloudmovement)=(sum(d<r_C1(r_C1>0)))'; %record how many clouds are covering the house
-            kcs1=kc_C1(d<repmat(r_C1,[1,number_of_houses])); %extract appropriate kc values that cover the house
-            if isempty(kcs1)==0
-                house_kcvalues(:,cloudmovement)=mean(kcs1); %take a mean of the kc values
-            end
-   
+            house_coverages=squeeze(sum(d<r_C1(r_C1>0))); %record how many clouds are covering the house
+            
+            % START HERE
+            kc_C1_each_timestep = kc_C1.*(d<repmat(r_C1,[1,number_of_houses,temporal_res]));
+            kc_C1_each_timestep(kc_C1_each_timestep==0)=NaN;
+            house_kcvalues = squeeze(nanmean(kc_C1_each_timestep));
+    
         end
+        
     end
     
     %% write separation house_kcvalues and house_coverages
@@ -250,4 +237,8 @@ for Hour =1:length(time) %loop every hour in the simulation
         dlmwrite(['supportingfiles',filesep,'temporary_files',filesep,'house_kcvalues_',num2str(house),'.txt'],house_kcvalues(house,:),'-append');
         dlmwrite(['supportingfiles',filesep,'temporary_files',filesep,'house_coverages_',num2str(house),'.txt'],house_coverages(house,:),'-append');
     end
+    
+    % report progress to user.
+    textprogressbar(100*Hour/length(time));
 end
+textprogressbar('')

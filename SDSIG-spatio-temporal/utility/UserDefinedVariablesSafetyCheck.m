@@ -77,3 +77,8 @@ end
 if ~exist([home_dir,'supportingfiles',filesep,'temporary_files',filesep],'dir')
     mkdir([home_dir,'supportingfiles',filesep,'temporary_files',filesep]);
 end
+
+% check that the output directory exists; if not, make it.
+if ~exist(['outputs',filesep],'dir')
+    mkdir(['outputs',filesep]);
+end

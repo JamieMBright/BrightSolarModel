@@ -72,3 +72,8 @@ end
 if time_cloud_amount ~= time_pressure
     error('the pressure and cloud amount must align')
 end
+
+% check that the temporay_files directory exists; if not, make it. 
+if ~exist([home_dir,'supportingfiles',filesep,'temporary_files',filesep],'dir')
+    mkdir([home_dir,'supportingfiles',filesep,'temporary_files',filesep]);
+end
